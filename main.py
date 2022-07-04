@@ -1,30 +1,33 @@
 from PyPDF2 import PdfReader
 
-reader = PdfReader('Lei 14310 CEDM.pdf')
-# page = reader.pages[1]
+def getContentPDF(path):
+    txt = ""
+    file = str(path)
+    reader = PdfReader(file)
+    pg_cont = len(reader.pages)
+    for i in range(0, pg_cont):
+        page = reader.pages[i].extract_text()
+        txt += page + "\n"
+    return txt.lower()
 
-pg_cont = len(reader.pages)
-txt = ""
-for i in range(0, pg_cont):
-    page = reader.pages[i].extract_text()
-    #print(page)
-    txt += page + "\n"
+consult_file = getContentPDF('Lei 14310 CEDM.pdf')
 
-with open("content.txt", "a") as arquivo:
-    arquivo.write(txt)
-    
-# print(txt)
-# print(page.extract_text())
+consults = [
+    '4º',
+    'comenda',
+    'estadual',
+    'laksjdlaks',
+    'hjahsdkj',
+]
 
-#text = page.extract_text()
+for i in consults:
+    if i in consult_file:
+        print(f'{i} is in your file')
+    else:
+        print(f'{i} is NOT in your file')
 
-# print(type(text))
-
-#my_list = ['camaradagem', '4º', '3º', 'bjalskliak']
-
-#for i in my_list:
-    #if i in text:
-        #print(f'Parâmetro << {i} >> localizado.')
-
-    #else:
-        #print(f'Parâmetro << {i} >> não encontrado.')
+# writing the test result in a txt file 
+#with open("content.txt", "a") as arquivo:
+#   arquivo.write(consult_file)
+#
+#arquivo.close()
